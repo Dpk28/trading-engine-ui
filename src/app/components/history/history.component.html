@@ -1,0 +1,134 @@
+    <ngx-loading [show]="show" [config]="{ backdropBorderRadius: '14px',fullScreenBackdrop:true }"></ngx-loading>
+    <div class="header-bg">
+            <!-- Navigation Bar-->
+            <header id="topnav">
+                <div class="topbar-main">
+                    <div class="container-fluid">
+                        <div class="menu-extras topbar-custom navbar p-0">
+                            <ul class="list-inline d-none d-lg-block mb-0">
+                                <li class="list-inline-item dropdown notification-list">
+                                    <a class="nav-link dropdown-toggle arrow-none waves-effect" data-toggle="dropdown" href="#" role="button"
+                                    aria-haspopup="false" aria-expanded="false" [routerLink]="['/']">
+                                        Dashboard<i class="mdi mdi-plus"></i>
+                                    </a>
+                                </li>
+                            </ul>
+
+                            <ul class="list-inline ml-auto mb-0">
+                                <!-- User-->
+                                <li class="list-inline-item dropdown notification-list nav-user">
+                                    <a class="nav-link dropdown-toggle arrow-none waves-effect" data-toggle="dropdown" href="#" role="button"
+                                    aria-haspopup="false" aria-expanded="false">
+                                        <img src="assets/images/users/avatar-6.jpg" alt="user" class="rounded-circle">
+                                        <span class="d-none d-md-inline-block ml-1">Deepak Bansal <i class="mdi mdi-chevron-down"></i> </span>
+                                    </a>
+                                </li>
+                                <li class="menu-item list-inline-item">
+                                    <!-- Mobile menu toggle-->
+                                    <a class="navbar-toggle nav-link">
+                                        <div class="lines">
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                        </div>
+                                    </a>
+                                    <!-- End mobile menu toggle-->
+                                </li>
+
+                            </ul>
+
+                        </div>
+                        <!-- end menu-extras -->
+
+                        <div class="clearfix"></div>
+
+                    </div> <!-- end container -->
+                </div>
+            </header>
+            <!-- End Navigation Bar-->
+
+        </div>
+        <!-- header-bg -->
+
+        <div class="wrapper">
+            <div class="container-fluid">
+
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="page-title-box">
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <h4 class="page-title m-0">Trade History</h4>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- end page title end breadcrumb -->
+
+                <div class="row">
+                    <div class="col-xl-6 col-md-6">
+                        <div class="card bg-pink mini-stat text-white">
+                            <div class="p-3 mini-stat-desc">
+                                <div class="clearfix">
+                                    <h6 class="text-uppercase mt-0 float-left text-white-50">Total Sell Orders</h6>
+                                    <h4 class="mb-3 mt-0 float-right">{{sellOrdersCount}}</h4>
+                                </div>
+                                <div>
+                                    <span class="badge badge-light text-primary"> 0% </span> <span class="ml-2">From previous period</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3=6 col-md-6">
+                        <div class="card bg-success mini-stat text-white">
+                            <div class="p-3 mini-stat-desc">
+                                <div class="clearfix">
+                                    <h6 class="text-uppercase mt-0 float-left text-white-50">Total Buy Orders</h6>
+                                    <h4 class="mb-3 mt-0 float-right">{{buyOrdersCount}}</h4>
+                                </div>
+                                <div>
+                                    <span class="badge badge-light text-info"> 0% </span> <span class="ml-2">From previous period</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+                <!-- end row -->
+				<div class="row">
+                    <div class="col-12">
+                        <div class="card m-b-30">
+                            <div class="card-body">
+                            	<h4 class="mt-0 header-title">Trade History</h4>
+
+                                <table id="historyDT" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                    <thead>
+                                    <tr>
+                                        <th>Timestamp</th>
+                                        <th>Buyer Order ID</th>
+                                        <th>Seller Order ID</th>
+                                        <th>Price(ETH)</th>
+                                        <th>Amount(BTC)</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+	                                    <tr *ngFor="let trade of trades">
+	                                        <td>{{trade.timestamp | timestampConverter}}</td>
+	                                        <td>{{trade.taker_order_id}}</td>
+                                            <td>{{trade.maker_order_id}}</td>
+	                                        <td>{{trade.price}}</td>
+	                                        <td>{{trade.amount}}</td>
+	                                    </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div> <!-- end col -->
+                </div> <!-- end row -->
+            </div> <!-- end container-fluid -->
+        </div>
+        <!-- end wrapper -->

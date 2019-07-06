@@ -1,0 +1,183 @@
+    <ngx-loading [show]="show" [config]="{ backdropBorderRadius: '14px',fullScreenBackdrop:true }"></ngx-loading>
+    <div class="header-bg">
+            <!-- Navigation Bar-->
+            <header id="topnav">
+                <div class="topbar-main">
+                    <div class="container-fluid">
+                        <div class="menu-extras topbar-custom navbar p-0">
+                            <ul class="list-inline d-none d-lg-block mb-0">
+                                <li class="list-inline-item dropdown notification-list">
+                                    <a class="nav-link dropdown-toggle arrow-none waves-effect" data-toggle="dropdown" href="#" role="button"
+                                    aria-haspopup="false" aria-expanded="false">
+                                        Create New Order<i class="mdi mdi-plus" (click)="showOrderForm()"></i>
+                                    </a>
+                                </li>
+                                <li class="list-inline-item dropdown notification-list">
+                                    <a class="nav-link dropdown-toggle arrow-none waves-effect" data-toggle="dropdown" href="#" role="button"
+                                    aria-haspopup="false" aria-expanded="false" [routerLink]="['/history']">
+                                        Trade History<i class="mdi mdi-history"></i>
+                                    </a>
+                                </li>
+                            </ul>
+
+                            <ul class="list-inline ml-auto mb-0">
+                                <!-- User-->
+                                <li class="list-inline-item dropdown notification-list nav-user">
+                                    <a class="nav-link dropdown-toggle arrow-none waves-effect" data-toggle="dropdown" href="#" role="button"
+                                    aria-haspopup="false" aria-expanded="false">
+                                        <img src="assets/images/users/avatar-6.jpg" alt="user" class="rounded-circle">
+                                        <span class="d-none d-md-inline-block ml-1">Deepak Bansal <i class="mdi mdi-chevron-down"></i> </span>
+                                    </a>
+                                </li>
+                                <li class="menu-item list-inline-item">
+                                    <!-- Mobile menu toggle-->
+                                    <a class="navbar-toggle nav-link">
+                                        <div class="lines">
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                        </div>
+                                    </a>
+                                    <!-- End mobile menu toggle-->
+                                </li>
+
+                            </ul>
+
+                        </div>
+                        <!-- end menu-extras -->
+
+                        <div class="clearfix"></div>
+
+                    </div> <!-- end container -->
+                </div>
+            </header>
+            <!-- End Navigation Bar-->
+
+        </div>
+        <!-- header-bg -->
+
+        <div class="wrapper">
+            <div class="container-fluid">
+
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="page-title-box">
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <h4 class="page-title m-0">Dashboard</h4>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- end page title end breadcrumb -->
+
+                <div class="row">
+                    <div class="col-xl-6 col-md-6">
+                        <div class="card bg-pink mini-stat text-white">
+                            <div class="p-3 mini-stat-desc">
+                                <div class="clearfix">
+                                    <h6 class="text-uppercase mt-0 float-left text-white-50">Total Sell Orders</h6>
+                                    <h4 class="mb-3 mt-0 float-right">{{sellOrdersCount}}</h4>
+                                </div>
+                                <div>
+                                    <span class="badge badge-light text-primary"> 0% </span> <span class="ml-2">From previous period</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3=6 col-md-6">
+                        <div class="card bg-success mini-stat text-white">
+                            <div class="p-3 mini-stat-desc">
+                                <div class="clearfix">
+                                    <h6 class="text-uppercase mt-0 float-left text-white-50">Total Buy Orders</h6>
+                                    <h4 class="mb-3 mt-0 float-right">{{buyOrdersCount}}</h4>
+                                </div>
+                                <div>
+                                    <span class="badge badge-light text-info"> 0% </span> <span class="ml-2">From previous period</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+                <!-- end row -->
+				<div class="row">
+                    <div class="col-12">
+                        <div class="card m-b-30">
+                            <div class="card-body">
+                            	<h4 class="header-title">Order Book (BTC/ETH)</h4>
+
+                                <table id="orderDT" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                    <thead>
+                                    <tr>
+                                    	<th>Order ID</th>
+                                        <th>Timestamp</th>
+                                        <th>Amount(BTC)</th>
+                                        <th>Price(ETH)</th>
+                                        <th>Order Type</th>
+                                        <th>Status</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+	                                    <tr *ngFor="let order of orders">
+	                                    	<td>{{order.orderID}}</td>
+	                                        <td>{{order.timestamp | timestampConverter}}</td>
+	                                        <td>{{order.amount}}</td>
+	                                        <td>{{order.price}}</td>
+	                                        <td>{{order.side}}</td>
+	                                        <td>{{order.status}}</td>
+	                                    </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div> <!-- end col -->
+                </div> <!-- end row -->
+                <div class="row" *ngIf="isOrderFormVisible">
+                    <div class="col-12">
+                        <div class="card m-b-30">
+                            <div class="card-body">
+
+                                <h4 class="mt-0 header-title">Create Order</h4>
+                                <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Order Type</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" formControlName="orderType">
+                                            <option>Buy</option>
+                                            <option>Sell</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">Price(ETH)</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" type="number" id="example-text-input" formControlName="price">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="example-text-input" class="col-sm-2 col-form-label">Amount(BTC)</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control" type="number" id="example-text-input" formControlName="amount">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                        <div class="col-sm-0">
+                                            <button type="submit" class="btn btn-primary waves-effect waves-light"> Submit </button>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <button type="reset" class="btn btn-secondary waves-effect" (click)="hideOrderForm()"> Cancel </button>
+                                        </div>
+                                </div>
+                            </form>
+                            </div>
+                        </div>
+                    </div> <!-- end col -->
+                </div> <!-- end row -->
+            </div> <!-- end container-fluid -->
+        </div>
+        <!-- end wrapper -->
